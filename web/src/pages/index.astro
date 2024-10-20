@@ -1,0 +1,50 @@
+---
+import "@/styles/globals.css";
+import Prose from "@/components/Prose.astro";
+import * as studio from "@/markdown/studio-art.md";
+import Layout from "@/layouts/layout.astro";
+import { Image } from "astro:assets";
+import { Card } from "@/components/ui/card";
+import DigitalReconstraction from "../images/digital_reconstraction_workflow.png";
+import SimulationNetworkActivity from "../images/simulation_network_activity.gif";
+
+const title = "Thalamic control of sensory processing and spindles in a biophysical somatosensory thalamoreticular circuit model of wakefulness and sleep";
+---
+
+<Layout title={title}>
+  <h1 class="font-bold text-3xl mb-4 py-4 px-10">{studio.frontmatter.title}</h1>
+  <div class="px-10 py-5">
+    <Prose>
+      <studio.Content />
+    </Prose>
+    <div class="grid grid-cols-2 items-center justify-start gap-4 mt-5">
+      <Card className="px-4 py-4" client:load>
+        <div class="flex items-start flex-col w-full h-full">
+          <h3>
+            Digital reconstruction workflow (adapted from [Markram et al.,
+            2015](https://doi.org/10.1016/j.cell.2015.09.029))
+          </h3>
+          <Image
+            src={DigitalReconstraction}
+            alt="Digital reconstruction workflow"
+            title="Digital reconstruction workflow"
+            class="mt-10"
+          />
+        </div>
+      </Card>
+	  <Card className="px-4 py-4" client:load>
+		  <div class="flex items-start flex-col">
+			<h3>Simulation of network activity in the microcircuit</h3>
+			<img
+			  src={SimulationNetworkActivity.src}
+			  title="Simulation of network activity in the microcircuit"
+			  alt="Simulation of network activity in the microcircuit"
+			  width={SimulationNetworkActivity.width}
+			  height={SimulationNetworkActivity.height}
+			  class="mt-10"
+			/>
+		  </div>
+	  </Card>
+    </div>
+  </div>
+</Layout>
