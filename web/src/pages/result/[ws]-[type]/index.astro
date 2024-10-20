@@ -1,0 +1,141 @@
+---
+import Table from "@/components/data-table";
+import {
+  drz,
+  exp_data_morphology as exp_data_morphology_t,
+  dig_recons_fact_sheet as dig_recons_fact_sheet_t,
+  dig_recons_microcircuit_reconstruction as dig_recons_microcircuit_reconstruction_t,
+  dig_recons_neuron_morphology as dig_recons_neuron_morphology_t,
+  dig_recons_neuron_electrophysiology as dig_recons_neuron_electrophysiology_t,
+  dig_recons_single_cell_model as dig_recons_single_cell_model_t,
+  exp_data_electrophysiology as exp_data_electrophysiology_t,
+  exp_data_bouton_density as exp_data_bouton_density_t,
+  exp_data_layer_anatomy as exp_data_layer_anatomy_t,
+  exp_data_neuron_density as exp_data_neuron_density_t,
+} from "@/api/db";
+import { getTableColumns } from "drizzle-orm";
+import Layout from "@/layouts/result-layout.astro";
+import { getPageMapping } from "@/lib/shared";
+
+export async function getStaticPaths() {
+  const [
+    exp_data_morphology,
+    exp_data_electrophysiology,
+    exp_data_bouton_density,
+    exp_data_layer_anatomy,
+    exp_data_neuron_density,
+    dig_recons_fact_sheet,
+    dig_recons_microcircuit_reconstruction,
+    dig_recons_neuron_morphology,
+    dig_recons_neuron_electrophysiology,
+    dig_recons_single_cell_model,
+  ] = await Promise.all(
+    [
+      exp_data_morphology_t,
+      exp_data_electrophysiology_t,
+      exp_data_bouton_density_t,
+      exp_data_layer_anatomy_t,
+      exp_data_neuron_density_t,
+      dig_recons_fact_sheet_t,
+      dig_recons_microcircuit_reconstruction_t,
+      dig_recons_neuron_morphology_t,
+      dig_recons_neuron_electrophysiology_t,
+      dig_recons_single_cell_model_t,
+    ].map((source) => drz.select().from(source))
+  );
+
+  const data = {
+    exp_data_morphology: {
+      ws: "exp_data",
+      type: "morphology",
+      rows: exp_data_morphology,
+      source: exp_data_morphology_t,
+    },
+    exp_data_electrophysiology: {
+      ws: "exp_data",
+      type: "electrophysiology",
+      rows: exp_data_electrophysiology,
+      source: exp_data_electrophysiology_t,
+    },
+    exp_data_bouton_density: {
+      ws: "exp_data",
+      type: "bouton_density",
+      rows: exp_data_bouton_density,
+      source: exp_data_bouton_density_t,
+    },
+    exp_data_layer_anatomy: {
+      ws: "exp_data",
+      type: "layer_anatomy",
+      rows: exp_data_layer_anatomy,
+      source: exp_data_layer_anatomy_t,
+    },
+    exp_data_neuron_density: {
+      ws: "exp_data",
+      type: "neuron_density",
+      rows: exp_data_neuron_density,
+      source: exp_data_neuron_density_t,
+    },
+    dig_recons_fact_sheet: {
+      ws: "dig_recons",
+      type: "fact_sheet",
+      rows: dig_recons_fact_sheet,
+      source: dig_recons_fact_sheet_t,
+    },
+    dig_recons_microcircuit_reconstruction: {
+      ws: "dig_recons",
+      type: "microcircuit_reconstruction",
+      rows: dig_recons_microcircuit_reconstruction,
+      source: dig_recons_microcircuit_reconstruction_t,
+    },
+    dig_recons_neuron_morphology: {
+      ws: "dig_recons",
+      type: "neuron_morphology",
+      rows: dig_recons_neuron_morphology,
+      source: dig_recons_neuron_morphology_t,
+    },
+    dig_recons_neuron_electrophysiology: {
+      ws: "dig_recons",
+      type: "neuron_electrophysiology",
+      rows: dig_recons_neuron_electrophysiology,
+      source: dig_recons_neuron_electrophysiology_t,
+    },
+    dig_recons_single_cell_model: {
+      ws: "dig_recons",
+      type: "single_cell_model",
+      rows: dig_recons_single_cell_model,
+      source: dig_recons_single_cell_model_t,
+    },
+  };
+
+  return Object.entries(data).map(([key, { ws, type, rows, source }]) => {
+    const clmsObj = Object.values(getTableColumns(source)).map(
+      (col) => col.name
+    );
+    return {
+      params: { ws, type },
+      props: {
+        rows,
+        columns: clmsObj
+          .filter((col) => !["self", "resource"].includes(col))
+          .map((col) => ({
+            id: col,
+            key: col,
+            name: col,
+            enableSorting: true,
+            enableHiding: true,
+          })),
+      },
+    };
+  });
+}
+const { ws, type } = Astro.params;
+const { columns, rows } = Astro.props;
+
+const tile = getPageMapping(ws, type);
+---
+
+<Layout title={tile}>
+  <div class="m-10">
+    <Table data={rows} columns={columns} isSelectable={false} client:load />
+  </div>
+</Layout>

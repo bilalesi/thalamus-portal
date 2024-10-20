@@ -1,0 +1,15 @@
+---
+import "@/styles/globals.css";
+import Layout from './layout.astro';
+import { BreadcrumbWithDropdown } from "@/components/workspaces/breadcrumb";
+const { title } = Astro.props;
+
+---
+
+
+<Layout title={title}>
+    <div class="m-10 flex flex-col w-max">
+      <BreadcrumbWithDropdown client:load />
+    </div>
+    <slot />
+</Layout>

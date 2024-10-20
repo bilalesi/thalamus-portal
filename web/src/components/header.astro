@@ -1,0 +1,13 @@
+---
+import { Image } from "astro:assets";
+import { Button } from "@/components/ui/button";
+---
+
+<header class="bg-[#003A8C] w-full h-16 flex items-center justify-between">
+  <a href="/" class="p-4">
+    <Image src="/logo.webp" alt="obpp" width="152" height="41" />
+  </a>
+  <Button variant="secondary" , className="rounded-none bg-transparent text-white hover:text-blue-600 h-full px-10 text-lg font-light">
+    <a href="/result/exp_data-morphology">Portal results</a>
+  </Button>
+</header>

@@ -128,3 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+web/thalamus.sqlite
+prose/thalamus.sqlite
+.DS_Store
+node_modules
+.astro
