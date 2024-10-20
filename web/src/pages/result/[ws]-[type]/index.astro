@@ -107,7 +107,7 @@ export async function getStaticPaths() {
     },
   };
 
-  return Object.entries(data).map(([key, { ws, type, rows, source }]) => {
+  return Object.entries(data).map(([_, { ws, type, rows, source }]) => {
     const clmsObj = Object.values(getTableColumns(source)).map(
       (col) => col.name
     );

@@ -129,7 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 web/thalamus.sqlite
-prose/thalamus.sqlite
+creed/thalamus.sqlite
 .DS_Store
 node_modules
 .astro

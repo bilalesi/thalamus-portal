@@ -1,7 +1,7 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
 import { drz, artifacts } from '@/api/db'
-import { eq, lt, gte, ne, and } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 
 export const server = {
     getArtifacts: defineAction({
