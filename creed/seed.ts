@@ -1,3 +1,11 @@
+// this file will generate the db schema
+// write it in a file to be managed by drizzle
+// this is for thalamus studio so the table are generating based on
+// the workspaces (menu in blue)
+// and dashboards (per menu item)
+// for thalamus is missing the videos
+// the tables should be renamed for different portals
+
 import { create_table } from './db-tools';
 import { experimental_data_result, digital_reconstruction_result, fetch_resource, downloadArtifacts } from './nexus';
 import { $ } from "bun";
@@ -155,10 +163,8 @@ const seed_db = async () => {
         }
     }
 
-    const binaries = await Promise.all(final_results.slice(0, 40).map((item: any) => downloadArtifacts(JSON.parse(item["resource"]))));
-    console.log('binaries', binaries)
+    const binaries = await Promise.all(final_results.map((item: any) => downloadArtifacts(JSON.parse(item["resource"]))));
     const flatted_binaries = binaries.flat();
-    console.log('flatted_binaries', flatted_binaries)
     if (flatted_binaries && flatted_binaries.length) await drz.insert(artifacts).values(flatted_binaries as any);
 }
 

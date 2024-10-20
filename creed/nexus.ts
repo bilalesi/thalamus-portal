@@ -1,6 +1,6 @@
 import { ensureArray } from "./db-tools";
 
-const url = "https://bbp.epfl.ch/nexus/v1/views/public/thalamus/https%3A%2F%2Fbluebrain.github.io%2Fnexus%2Fvocabulary%2F20240305SparqlIndex/sparql";
+const url = process.env.NEXUS_VIEW_URI;
 const token = "Bearer xxx";
 
 const experimental_data = {
