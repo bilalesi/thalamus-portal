@@ -15,7 +15,6 @@ import {
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableFooter,
     TableHead,
@@ -120,7 +119,7 @@ export function ResourceViewer(
                     className="right-2 top-2 bottom-2 fixed z-10 outline-none max-w-3xl w-full flex"
                     style={{ '--initial-transform': 'calc(100% + 8px)' } as React.CSSProperties}
                 >
-                    <div className="bg-zinc-50 h-full w-full grow p-5 flex flex-col rounded-[16px]  overflow-scroll">
+                    <div className="bg-zinc-50 h-full w-full grow p-5 flex flex-col rounded-[2px]  overflow-scroll">
                         <Drawer.Title className="p-4 pb-0 font-medium mb-2 text-zinc-900">{resource?.["name"]}</Drawer.Title>
                         <Drawer.Description className="text-zinc-600 mb-2">
                             <Accordion type="single" collapsible className="w-full" defaultValue="resource">
